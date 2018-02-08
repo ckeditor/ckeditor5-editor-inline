@@ -157,15 +157,55 @@ export default class InlineEditorUIView extends EditorUIView {
 	 * @private
 	 * @param {module:utils/dom/rect~Rect} editableRect Rect of the {@link #editableElement}.
 	 * @param {module:utils/dom/rect~Rect} panelRect Rect of the {@link #panel}.
+	 * @param {utils/dom/rect~Rect} viewportRect A rect of the viewport.
 	 */
-	_getPanelPositionTop( editableRect, panelRect ) {
+	_getPanelPositionTop( editableRect, panelRect, viewportRect ) {
 		let top;
 
+		// Position on the top of the editable when there's enough space between the
+		// top of the viewport and the top of the editable.
+		//
+		//
+		//		---[ Viewport ]--------------
+		//
+		//
+		//		[ Panel ]
+		//		+------------------+
+		//		| #editableElement |
+		//		+------------------+
+		//
+		//
+		//		-----------------------------
+		//
 		if ( editableRect.top > panelRect.height + this.viewportTopOffset ) {
 			top = editableRect.top - panelRect.height;
-		} else if ( editableRect.bottom > panelRect.height + this.viewportTopOffset + 50 ) {
+		}
+		// Position over the editable when there's not enough space above AND below the editable.
+		//
+		//		---[ Viewport ]--------------
+		//		+------------------+
+		//		| #editableElement |
+		//		|[ Panel ]         |
+		//		|                  |
+		//		|                  |
+		//		+------------------+
+		//		-----------------------------
+		//
+		else if ( editableRect.bottom + panelRect.height > viewportRect.height ) {
 			top = this.viewportTopOffset;
-		} else {
+		}
+		// Position below the editable when there's no enough space above editable.
+		//
+		//		---[ Viewport ]--------------
+		//		+------------------+
+		//		| #editableElement |
+		//		+------------------+
+		//		[ Panel ]
+		//
+		//
+		//		-----------------------------
+		//
+		else {
 			top = editableRect.bottom;
 		}
 
@@ -180,16 +220,16 @@ export default class InlineEditorUIView extends EditorUIView {
 	 */
 	_getPanelPositions() {
 		return [
-			( editableRect, panelRect ) => {
+			( editableRect, panelRect, viewportRect ) => {
 				return {
-					top: this._getPanelPositionTop( editableRect, panelRect ),
+					top: this._getPanelPositionTop( editableRect, panelRect, viewportRect ),
 					left: editableRect.left,
 					name: 'toolbar_west'
 				};
 			},
-			( editableRect, panelRect ) => {
+			( editableRect, panelRect, viewportRect ) => {
 				return {
-					top: this._getPanelPositionTop( editableRect, panelRect ),
+					top: this._getPanelPositionTop( editableRect, panelRect, viewportRect ),
 					left: editableRect.left + editableRect.width - panelRect.width,
 					name: 'toolbar_east'
 				};

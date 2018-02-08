@@ -103,6 +103,19 @@ describe( 'InlineEditorUIView', () => {
 	} );
 
 	describe( 'panelPositions', () => {
+		let viewportRect;
+
+		beforeEach( () => {
+			viewportRect = {
+				top: 0,
+				bottom: 1000,
+				left: 0,
+				right: 1000,
+				width: 1000,
+				height: 1000
+			};
+		} );
+
 		it( 'returns the positions in the right order', () => {
 			const positions = view.panelPositions;
 			const editableRect = {
@@ -147,13 +160,13 @@ describe( 'InlineEditorUIView', () => {
 					height: 100 // !
 				};
 
-				const { top, left } = position( editableRect, panelRect );
+				const { top, left } = position( editableRect, panelRect, viewportRect );
 
 				expect( top ).to.equal( 1 );
 				expect( left ).to.equal( expectedLeft );
 			} );
 
-			it( 'positions the panel over the editable when there\'s not enough space above (1)', () => {
+			it( 'positions the panel below the editable when there\'s not enough space above (1)', () => {
 				const position = view.panelPositions[ positionIndex ];
 				const editableRect = {
 					top: 100, // !
@@ -168,17 +181,17 @@ describe( 'InlineEditorUIView', () => {
 					height: 100 // !
 				};
 
-				const { top, left } = position( editableRect, panelRect );
+				const { top, left } = position( editableRect, panelRect, viewportRect );
 
-				expect( top ).to.equal( 0 );
+				expect( top ).to.equal( 300 );
 				expect( left ).to.equal( expectedLeft );
 			} );
 
-			it( 'positions the panel over the editable when there\'s not enough space above (2)', () => {
+			it( 'positions the panel below the editable when there\'s not enough space above (2)', () => {
 				const position = view.panelPositions[ positionIndex ];
 				const editableRect = {
 					top: 99, // !
-					bottom: 399,
+					bottom: 300,
 					left: 100,
 					right: 100,
 					width: 100,
@@ -189,17 +202,17 @@ describe( 'InlineEditorUIView', () => {
 					height: 100 // !
 				};
 
-				const { top, left } = position( editableRect, panelRect );
+				const { top, left } = position( editableRect, panelRect, viewportRect );
 
-				expect( top ).to.equal( 0 );
+				expect( top ).to.equal( 300 );
 				expect( left ).to.equal( expectedLeft );
 			} );
 
-			it( 'positions the panel over the editable when there\'s not enough space above (3)', () => {
+			it( 'positions the panel over the editable when there\'s not enough space above and below', () => {
 				const position = view.panelPositions[ positionIndex ];
 				const editableRect = {
-					top: 51, // !
-					bottom: 399,
+					top: 99, // !
+					bottom: 299,
 					left: 100,
 					right: 100,
 					width: 100,
@@ -210,7 +223,9 @@ describe( 'InlineEditorUIView', () => {
 					height: 100 // !
 				};
 
-				const { top, left } = position( editableRect, panelRect );
+				viewportRect.height = 398; // !
+
+				const { top, left } = position( editableRect, panelRect, viewportRect );
 
 				expect( top ).to.equal( 0 );
 				expect( left ).to.equal( expectedLeft );
@@ -231,14 +246,14 @@ describe( 'InlineEditorUIView', () => {
 					height: 100 // !
 				};
 
-				const { top, left } = position( editableRect, panelRect );
+				const { top, left } = position( editableRect, panelRect, viewportRect );
 
 				expect( top ).to.equal( 150 );
 				expect( left ).to.equal( expectedLeft );
 			} );
 
 			describe( 'view#viewportTopOffset', () => {
-				it( 'sticks the panel to the offset when there\'s not enough space above', () => {
+				it( 'sticks the panel to the offset when there\'s not enough space above and below', () => {
 					view.viewportTopOffset = 50;
 
 					const position = view.panelPositions[ positionIndex ];
@@ -255,7 +270,9 @@ describe( 'InlineEditorUIView', () => {
 						height: 50
 					};
 
-					const { top, left } = position( editableRect, panelRect );
+					viewportRect.height = 249; // !
+
+					const { top, left } = position( editableRect, panelRect, viewportRect );
 
 					expect( top ).to.equal( 50 );
 					expect( left ).to.equal( expectedLeft );
@@ -278,7 +295,7 @@ describe( 'InlineEditorUIView', () => {
 						height: 80
 					};
 
-					const { top, left } = position( editableRect, panelRect );
+					const { top, left } = position( editableRect, panelRect, viewportRect );
 
 					expect( top ).to.equal( 150 );
 					expect( left ).to.equal( expectedLeft );
