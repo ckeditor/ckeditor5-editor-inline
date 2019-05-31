@@ -144,6 +144,12 @@ export default class InlineEditorUIView extends EditorUIView {
 		this.panel.content.add( this.toolbar );
 	}
 
+	destroy() {
+		return super.destroy();
+
+		this.panel.destroy();
+	}
+
 	/**
 	 * Determines the panel top position of the {@link #panel} in {@link #panelPositions}.
 	 *
