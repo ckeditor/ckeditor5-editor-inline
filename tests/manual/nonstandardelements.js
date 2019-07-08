@@ -8,13 +8,8 @@
 import InlineEditor from '../../src/inlineeditor';
 import ArticlePluginSet from '@ckeditor/ckeditor5-core/tests/_utils/articlepluginset';
 
-import Essentials from '@ckeditor/ckeditor5-essentials/src/essentials';
-import Bold from '@ckeditor/ckeditor5-basic-styles/src/bold';
-import Italic from '@ckeditor/ckeditor5-basic-styles/src/italic';
 import Underline from '@ckeditor/ckeditor5-basic-styles/src/underline';
 import Code from '@ckeditor/ckeditor5-basic-styles/src/code';
-import Link from '@ckeditor/ckeditor5-link/src/link';
-import Undo from '@ckeditor/ckeditor5-undo/src/undo';
 import Font from '@ckeditor/ckeditor5-font/src/font';
 import Highlight from '@ckeditor/ckeditor5-highlight/src/highlight';
 import { createObserver } from '@ckeditor/ckeditor5-utils/tests/_utils/utils';
@@ -24,95 +19,58 @@ window.editables = [];
 window._observers = [];
 
 function initEditors() {
-	InlineEditor
-		.create( document.querySelector( '#editor-1' ), {
-			plugins: [ Essentials, Font, Bold, Italic, Underline, Code, Link, Undo, Highlight ],
-			useInlineRoot: true,
-			toolbar: [
-				'fontFamily',
-				'fontSize',
-				'fontColor',
-				'fontBackgroundColor',
-				'|',
-				'bold',
-				'italic',
-				'underline',
-				'code',
-				'link',
-				'highlight',
-				'undo',
-				'redo'
-			]
-		} )
-		.then( editor => {
-			console.log( '#editor-1 has been initialized', editor );
-			console.log( 'It has been added to global `editors` and `editables`.' );
+	init( '#editor-1', true );
+	init( '#editor-2' );
 
-			CKEditorInspector.attach( '#editor-1', editor );
+	function init( selector, useInlineRoot = false ) {
+		InlineEditor
+			.create( document.querySelector( selector ), {
+				plugins: [ ArticlePluginSet, Font, Highlight, Underline, Code ],
+				useInlineRoot,
+				toolbar: [
+					'heading',
+					'fontFamily',
+					'fontSize',
+					'fontColor',
+					'fontBackgroundColor',
+					'|',
+					'bold',
+					'italic',
+					'underline',
+					'code',
+					'link',
+					'highlight',
+					'bulletedList',
+					'numberedList',
+					'blockQuote',
+					'insertTable',
+					'undo',
+					'redo'
+				]
+			} )
+			.then( editor => {
+				console.log( `${ selector }. has been initialized`, editor );
+				console.log( 'It has been added to global `editors` and `editables`.' );
 
-			window.editors[ '#editor-1' ] = editor;
-			window.editables.push( editor.editing.view.document.getRoot() );
+				CKEditorInspector.attach( selector, editor );
 
-			const observer = createObserver();
+				window.editors[ selector ] = editor;
+				window.editables.push( editor.editing.view.document.getRoot() );
 
-			observer.observe(
-				'#editor-1.ui.focusTracker',
-				editor.ui.focusTracker,
-				[ 'isFocused' ]
-			);
+				const observer = createObserver();
 
-			window._observers.push( observer );
-		} )
-		.catch( err => {
-			console.error( err.stack );
-		} );
+				observer.observe(
+					`${ selector }.ui.focusTracker`,
+					editor.ui.focusTracker,
+					[ 'isFocused' ]
+				);
 
-	InlineEditor
-		.create( document.querySelector( '#editor-2' ), {
-			plugins: [ ArticlePluginSet, Font, Highlight, Underline, Code ],
-			toolbar: [
-				'heading',
-				'fontFamily',
-				'fontSize',
-				'fontColor',
-				'fontBackgroundColor',
-				'|',
-				'bold',
-				'italic',
-				'underline',
-				'code',
-				'link',
-				'highlight',
-				'bulletedList',
-				'numberedList',
-				'blockQuote',
-				'insertTable',
-				'undo',
-				'redo'
-			]
-		} )
-		.then( editor => {
-			console.log( '#editor-2 has been initialized', editor );
-			console.log( 'It has been added to global `editors` and `editables`.' );
-
-			CKEditorInspector.attach( '#editor-2', editor );
-
-			window.editors[ '#editor-2' ] = editor;
-			window.editables.push( editor.editing.view.document.getRoot() );
-
-			const observer = createObserver();
-
-			observer.observe(
-				'#editor-2.ui.focusTracker',
-				editor.ui.focusTracker,
-				[ 'isFocused' ]
-			);
-
-			window._observers.push( observer );
-		} )
-		.catch( err => {
-			console.error( err.stack );
-		} );
+				window._observers.push( observer );
+			} )
+			.catch( err => {
+				console.error( err.stack );
+			} );
+	}
 }
 
 function destroyEditors() {
