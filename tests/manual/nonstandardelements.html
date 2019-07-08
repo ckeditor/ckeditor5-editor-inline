@@ -4,21 +4,20 @@
 </p>
 
 
-<h1 id="editor-1" contenteditable="true" class="custom-class">Those are editors' instances created over some unusual elements.</h1>
-<p id="editor-2" contenteditable="true" class="custom-class">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus est nibh, sodales quis turpis sit amet, iaculis interdum ex. Donec in dictum est, id efficitur nisl. Phasellus venenatis consequat nibh. Aliquam ut laoreet mi. Etiam tincidunt, nulla finibus ultricies blandit, sem eros finibus libero, non dignissim quam enim vitae sem. Aenean elementum, diam ut gravida tincidunt, metus metus luctus arcu, sed pulvinar ex nunc eget erat. Pellentesque vitae odio blandit, ullamcorper ipsum placerat, congue dolor. Etiam a ornare arcu. Mauris consectetur gravida ipsum sed tristique. Integer mollis non metus sed efficitur. Praesent tempor vehicula magna, eget facilisis est. Mauris consequat diam tincidunt neque commodo volutpat. Cras vulputate eu metus at faucibus. Nunc sed ipsum placerat, viverra est eu, rhoncus nisi.</p>
-<pre id="editor-3" contenteditable="true" class="custom-class">
-  ___________________________
-< I'm an expert in my field. >
-  ---------------------------
-         \   ^__^
-          \  (oo)\_______
-             (__)\       )\/\
-                 ||----w |
-                 ||     ||
-</pre>
-<blockquote id="editor-4" contenteditable="true" class="custom-class">
-	<p>Code is humor. If you have to explain it, it's bad.</p>
-</blockquote>
+<h2>
+	Left editor is created directly over paragraph.<br>
+	Right editor is created over a div.
+</h2>
+<div class="wrapper">
+	<div>
+		<p id="editor-1" contenteditable="true" class="custom-class">Here is used <code>$inlineRoot</code> element.<br><br>Lorem ipsum dolor sit amet, consectetur adipiscing elit. <mark class="marker-yellow">Quid, quod homines infima fortuna,</mark> nulla spe rerum gerendarum, opifices denique delectantur <strong>historia</strong>? <span style="font-family:'Courier New', Courier, monospace;">Modo etiam paulum ad dexteram de via declinavi</span>, ut ad Pericli sepulcrum accederem. <span style="color:hsl(120,75%,60%);">Sin eam</span>, quam <span style="background-color:hsl(0,0%,0%);color:hsl(0,0%,100%);">Hieronymus</span>, ne fecisset idem, ut voluptatem illam <span style="background-color:hsl(270,75%,60%);color:hsl(180,75%,60%);">Aristippi</span> in <span style="background-color:hsl(30,75%,60%);">prima</span> commendatione poneret. <i>Videmus igitur ut conquiescere ne infantes quidem possint.</i> Duo Reges: constructio interrete. Me ipsum esse dicerem, inquam, nisi mihi viderer habere bene cognitam voluptatem et satis firme conceptam animo atque comprehensam. <strong>Nam ante Aristippus, et ille melius.</strong> Quid tibi, Torquate, quid huic Triario litterae, quid historiae cognitioque rerum, quid poetarum evolutio, quid tanta tot versuum memoria voluptatis affert? Erat enim res aperta. Venit ad extremum; <i>Idem iste, inquam, de voluptate quid sentit?</i> Quod ea non occurrentia fingunt, vincunt Aristonem; Octavio fuit, cum illam severitatem in eo filio adhibuit, quem in adoptionem D. <a href="http://loripsum.net/">Ille enim occurrentia nescio quae comminiscebatur;</a> Etenim nec iustitia nec amicitia esse omnino poterunt, nisi ipsae per se expetuntur.</p>
+	</div>
+
+	<div id="editor-2" class="custom-class" contenteditable="true">
+			<p>Here is used <code>$root</code> element.<br><br>Lorem ipsum dolor sit amet, consectetur adipiscing elit. <mark class="marker-yellow">Quid, quod homines infima fortuna,</mark> nulla spe rerum gerendarum, opifices denique delectantur <strong>historia</strong>? <span style="font-family:'Courier New', Courier, monospace;">Modo etiam paulum ad dexteram de via declinavi</span>, ut ad Pericli sepulcrum accederem. <span style="color:hsl(120,75%,60%);">Sin eam</span>, quam <span style="background-color:hsl(0,0%,0%);color:hsl(0,0%,100%);">Hieronymus</span>, ne fecisset idem, ut voluptatem illam <span style="background-color:hsl(270,75%,60%);color:hsl(180,75%,60%);">Aristippi</span> in <span style="background-color:hsl(30,75%,60%);">prima</span> commendatione poneret. <i>Videmus igitur ut conquiescere ne infantes quidem possint.</i> Duo Reges: constructio interrete. Me ipsum esse dicerem, inquam, nisi mihi viderer habere bene cognitam voluptatem et satis firme conceptam animo atque comprehensam. <strong>Nam ante Aristippus, et ille melius.</strong> Quid tibi, Torquate, quid huic Triario litterae, quid historiae cognitioque rerum, quid poetarum evolutio, quid tanta tot versuum memoria voluptatis affert? Erat enim res aperta. Venit ad extremum; <i>Idem iste, inquam, de voluptate quid sentit?</i> Quod ea non occurrentia fingunt, vincunt Aristonem; Octavio fuit, cum illam severitatem in eo filio adhibuit, quem in adoptionem D. <a href="http://loripsum.net/">Ille enim occurrentia nescio quae comminiscebatur;</a> Etenim nec iustitia nec amicitia esse omnino poterunt, nisi ipsae per se expetuntur.</p>
+	</div>
+</div>
+
 
 <style>
 	body {
@@ -26,14 +25,22 @@
 		height: 10000px;
 	}
 
-	.custom-class {
+	.wrapper > div {
+		float:left;
 		margin-top: 30px;
-		margin-left: 100px;
+		margin-left: 50px;
 		margin-bottom: 30px;
-		width: 450px;
+		width: 260px;
 	}
 
-	blockquote.custom-class {
-		font-style: italic;
+	p {
+		margin: 0;
+	}
+
+	h1 {
+		width: 570px;
+		margin-top: 30px;
+		margin-left: 50px;
+		margin-bottom: 30px;
 	}
 </style>
