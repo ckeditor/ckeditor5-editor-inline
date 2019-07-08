@@ -65,7 +65,7 @@ export default class InlineEditor extends Editor {
 
 		this.data.processor = new HtmlDataProcessor();
 
-		this.model.document.createRoot();
+		this.model.document.createRoot( config.useInlineRoot ? '$inlineRoot' : '$root' );
 
 		if ( isElement( sourceElementOrData ) ) {
 			this.sourceElement = sourceElementOrData;
