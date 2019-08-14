@@ -2,7 +2,7 @@
 <h2>
 	Choose your editor.
 </h2>
-<form id="select-editor"><p>Select option:</p></form>
+<form id="select-editor"><p>Editor element is marked with light green border.</p></form>
 <div id="wrapper" class="wrapper">
 </div>
 
@@ -12,12 +12,23 @@
 		height: 10000px;
 	}
 
+	form > label {
+		display: block
+	}
+
 	.wrapper {
 		margin-top: 30px;
 		margin-left: 50px;
-		width: 260px;
+		width: 460px;
 		padding: 20px;
-		border: 2px dashed black;
+	}
+
+	#editor {
+		border: 1px solid lightgreen;
+	}
+
+	.my-table, .my-table td, .my-table th {
+		border: 1px solid dimgray;
 	}
 
 	p {
