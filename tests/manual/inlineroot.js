@@ -12,81 +12,79 @@ import Underline from '@ckeditor/ckeditor5-basic-styles/src/underline';
 import Code from '@ckeditor/ckeditor5-basic-styles/src/code';
 import Font from '@ckeditor/ckeditor5-font/src/font';
 import Highlight from '@ckeditor/ckeditor5-highlight/src/highlight';
-import { createObserver } from '@ckeditor/ckeditor5-utils/tests/_utils/utils';
 
-window.editors = {};
-window.editables = [];
-window._observers = [];
-
-function initEditors() {
-	init( '#editor-1', true );
-	init( '#editor-2' );
-
-	function init( selector, useInlineRoot = false ) {
-		InlineEditor
-			.create( document.querySelector( selector ), {
-				plugins: [ ArticlePluginSet, Font, Highlight, Underline, Code ],
-				useInlineRoot,
-				toolbar: [
-					'heading',
-					'fontFamily',
-					'fontSize',
-					'fontColor',
-					'fontBackgroundColor',
-					'|',
-					'bold',
-					'italic',
-					'underline',
-					'code',
-					'link',
-					'highlight',
-					'bulletedList',
-					'numberedList',
-					'blockQuote',
-					'insertTable',
-					'undo',
-					'redo'
-				]
-			} )
-			.then( editor => {
-				console.log( `${ selector }. has been initialized`, editor );
-				console.log( 'It has been added to global `editors` and `editables`.' );
-
-				CKEditorInspector.attach( selector, editor );
-
-				window.editors[ selector ] = editor;
-				window.editables.push( editor.editing.view.document.getRoot() );
-
-				const observer = createObserver();
-
-				observer.observe(
-					`${ selector }.ui.focusTracker`,
-					editor.ui.focusTracker,
-					[ 'isFocused' ]
-				);
-
-				window._observers.push( observer );
-			} )
-			.catch( err => {
-				console.error( err.stack );
-			} );
+const wrapper = document.getElementById( 'wrapper' );
+const options = [
+	{
+		label: 'regular editor in div',
+		isBlock: true,
+		source: '<div id="editor"><p>This is the editor in the block element.</p></div>'
+	},
+	{
+		label: 'inline root editor in p',
+		source: '<p id="editor">This is the editor in the inline paragraph.</p>'
 	}
-}
+];
 
-function destroyEditors() {
-	for ( const selector in window.editors ) {
-		window.editors[ selector ].destroy().then( () => {
-			console.log( `${ selector } was destroyed.` );
+function initEditor( config ) {
+	if ( window.editor ) {
+		window.editor.destroy();
+	}
+
+	wrapper.innerHTML = config.source;
+
+	InlineEditor
+		.create( wrapper.querySelector( '#editor' ), {
+			plugins: [ ArticlePluginSet, Font, Highlight, Underline, Code ],
+			useInlineRoot: config.isBlock ? false : true,
+			toolbar: [
+				'heading',
+				'fontFamily',
+				'fontSize',
+				'fontColor',
+				'fontBackgroundColor',
+				'|',
+				'bold',
+				'italic',
+				'underline',
+				'code',
+				'link',
+				'highlight',
+				'bulletedList',
+				'numberedList',
+				'blockQuote',
+				'insertTable',
+				'undo',
+				'redo'
+			]
+		} )
+		.then( editor => {
+			window.editor = editor;
+		} )
+		.catch( err => {
+			console.error( err.stack );
 		} );
-	}
-
-	for ( const observer of window._observers ) {
-		observer.stopListening();
-	}
-
-	window.editors = {};
-	window.editables.length = window._observers.length = 0;
 }
 
-document.getElementById( 'initEditors' ).addEventListener( 'click', initEditors );
-document.getElementById( 'destroyEditors' ).addEventListener( 'click', destroyEditors );
+const form = document.getElementById( 'select-editor' );
+options.forEach( ( config, index ) => {
+	const label = document.createElement( 'label' );
+	label.textContent = config.label;
+
+	const input = document.createElement( 'input' );
+	input.name = 'editor';
+	input.type = 'radio';
+	input.value = index;
+
+	label.appendChild( input );
+
+	form.appendChild( label );
+} );
+
+form.addEventListener( 'change', evt => {
+	const index = evt.target && parseInt( evt.target.value, 10 );
+
+	if ( typeof index == 'number' ) {
+		initEditor( options[ index ] );
+	}
+} );

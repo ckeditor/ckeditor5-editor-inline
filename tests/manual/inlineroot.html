@@ -1,23 +1,10 @@
-<p>
-	<button id="destroyEditors">Destroy editor</button>
-	<button id="initEditors">Init editors</button>
-</p>
-
 
 <h2>
-	Left editor is created directly over paragraph.<br>
-	Right editor is created over a div.
+	Choose your editor.
 </h2>
-<div class="wrapper">
-	<div>
-		<p id="editor-1" contenteditable="true" class="custom-class">Here is used <code>$inlineRoot</code> element.<br><br><img src="https://ckeditor.com/docs/assets/img/ckeditor-5.svg" width="71" height="71"/>Lorem ipsum dolor sit amet, consectetur adipiscing elit. <mark class="marker-yellow">Quid, quod homines infima fortuna,</mark> nulla spe rerum gerendarum, opifices denique delectantur <strong>historia</strong>? <span style="font-family:'Courier New', Courier, monospace;">Modo etiam paulum ad dexteram de via declinavi</span>, ut ad Pericli sepulcrum accederem. <span style="color:hsl(120,75%,60%);">Sin eam</span>, quam <span style="background-color:hsl(0,0%,0%);color:hsl(0,0%,100%);">Hieronymus</span>, ne fecisset idem, ut voluptatem illam <span style="background-color:hsl(270,75%,60%);color:hsl(180,75%,60%);">Aristippi</span> in <span style="background-color:hsl(30,75%,60%);">prima</span> commendatione poneret. <i>Videmus igitur ut conquiescere ne infantes quidem possint.</i> Duo Reges: constructio interrete. Me ipsum esse dicerem, inquam, nisi mihi viderer habere bene cognitam voluptatem et satis firme conceptam animo atque comprehensam. <strong>Nam ante Aristippus, et ille melius.</strong> Quid tibi, Torquate, quid huic Triario litterae, quid historiae cognitioque rerum, quid poetarum evolutio, quid tanta tot versuum memoria voluptatis affert? Erat enim res aperta. Venit ad extremum; <i>Idem iste, inquam, de voluptate quid sentit?</i> Quod ea non occurrentia fingunt, vincunt Aristonem; Octavio fuit, cum illam severitatem in eo filio adhibuit, quem in adoptionem D. <a href="http://loripsum.net/">Ille enim occurrentia nescio quae comminiscebatur;</a> Etenim nec iustitia nec amicitia esse omnino poterunt, nisi ipsae per se expetuntur.</p>
-	</div>
-
-	<div id="editor-2" class="custom-class" contenteditable="true">
-			<p>Here is used <code>$root</code> element.<br><br><img src="https://ckeditor.com/docs/assets/img/ckeditor-5.svg" width="71" height="71"/>Lorem ipsum dolor sit amet, consectetur adipiscing elit. <mark class="marker-yellow">Quid, quod homines infima fortuna,</mark> nulla spe rerum gerendarum, opifices denique delectantur <strong>historia</strong>? <span style="font-family:'Courier New', Courier, monospace;">Modo etiam paulum ad dexteram de via declinavi</span>, ut ad Pericli sepulcrum accederem. <span style="color:hsl(120,75%,60%);">Sin eam</span>, quam <span style="background-color:hsl(0,0%,0%);color:hsl(0,0%,100%);">Hieronymus</span>, ne fecisset idem, ut voluptatem illam <span style="background-color:hsl(270,75%,60%);color:hsl(180,75%,60%);">Aristippi</span> in <span style="background-color:hsl(30,75%,60%);">prima</span> commendatione poneret. <i>Videmus igitur ut conquiescere ne infantes quidem possint.</i> Duo Reges: constructio interrete. Me ipsum esse dicerem, inquam, nisi mihi viderer habere bene cognitam voluptatem et satis firme conceptam animo atque comprehensam. <strong>Nam ante Aristippus, et ille melius.</strong> Quid tibi, Torquate, quid huic Triario litterae, quid historiae cognitioque rerum, quid poetarum evolutio, quid tanta tot versuum memoria voluptatis affert? Erat enim res aperta. Venit ad extremum; <i>Idem iste, inquam, de voluptate quid sentit?</i> Quod ea non occurrentia fingunt, vincunt Aristonem; Octavio fuit, cum illam severitatem in eo filio adhibuit, quem in adoptionem D. <a href="http://loripsum.net/">Ille enim occurrentia nescio quae comminiscebatur;</a> Etenim nec iustitia nec amicitia esse omnino poterunt, nisi ipsae per se expetuntur.</p>
-	</div>
+<form id="select-editor"><p>Select option:</p></form>
+<div id="wrapper" class="wrapper">
 </div>
-
 
 <style>
 	body {
@@ -25,12 +12,12 @@
 		height: 10000px;
 	}
 
-	.wrapper > div {
-		float:left;
+	.wrapper {
 		margin-top: 30px;
 		margin-left: 50px;
-		margin-bottom: 30px;
 		width: 260px;
+		padding: 20px;
+		border: 2px dashed black;
 	}
 
 	p {
