@@ -16,71 +16,80 @@ import Highlight from '@ckeditor/ckeditor5-highlight/src/highlight';
 const wrapper = document.getElementById( 'wrapper' );
 const options = [
 	{
-		label: 'Regular Root in <div>',
+		label: '-- select editor type --'
+	},
+	{
+		label: 'Regular Root over the <div>',
 		isBlock: true,
-		source: '<div id="editor"><p>This is the editor in the div element.</p></div>'
+		source: '<div id="editor"><p>This is the editor created over the div element.</p></div>'
 	},
 	{
-		label: 'Regular Root in <section>',
+		label: 'Regular Root over the <section>',
 		isBlock: true,
-		source: '<section id="editor"><p>This is the editor in the section element.</p></div>'
+		source: '<section id="editor"><p>This is the editor created over the section element.</p></div>'
 	},
 	{
-		label: 'Regular Root in <article>',
+		label: 'Regular Root over the <article>',
 		isBlock: true,
-		source: '<section><h2>My Blog Posts</h2><article id="editor"><header><p>Article Title</p></header><p>content</p></article>' +
-			'<aside><p>Author info</p></aside></section>'
+		source: '<section><h2>Section header</h2><article id="editor"><header><h2>Article Title</h2></header><p>Article\'s content.</p>' +
+			'<p>You can edit this content</p>' +
+			'</article><aside><p>Aside info</p></aside></section>'
 	},
 	{
-		label: 'Regular Root in <a>',
+		label: 'Regular Root over the <a> with the block elements',
 		isBlock: true,
-		source: '<a id="editor" href="http://ckeditor.com"><p>This is the editor in the block anchor.</p><ul><li>List item 1</li></ul></a>'
+		source: '<a id="editor" href="http://ckeditor.com"><section><h2>Wrapped section with link - header</h2><p>The entire section ' +
+			'is wrapped with the anchor which has initialized editor and contains other allowed block elements</p><table><tr><td>1.1</td>' +
+			'<td>1.2</td></tr><tr><td>2.1</td><td>2.2 with list:<ul><li>Item 1</li><li>Item 2</li></ul></td></tr></table></section>'
 	},
 	{
-		label: 'Inline Root in <p>',
-		source: '<p id="editor">This is the editor in the inline paragraph.</p>'
+		label: 'Inline Root over the <p>',
+		source: '<p id="editor">This is the editor created over the paragraph.</p>'
 	},
 	{
-		label: 'Inline Root in <h1>',
-		source: '<h1 id="editor">This is the editor in the inline header 1.</h1>'
+		label: 'Inline Root over the <h1>',
+		source: '<h1 id="editor">This is the editor created over the header 1.</h1>'
 	},
 	{
-		label: 'Inline Root in <a>',
-		source: '<a id="editor" href="http://ckeditor.com">This is <strong>the editor in t<em>he inline</em></strong><em> anch</em>or.</a>'
+		label: 'Inline Root over the <a> with the inline elements only',
+		source: '<a id="editor" href="http://ckeditor.com">This is the editor created over the inline anchor, which contains: ' +
+			'<strong>strong</strong> elements, <em>emphasis</em> elements, or <strong><em>combination</strong></em> of them.</a>'
 	},
 	{
-		label: 'Inline Root in <figcaption>',
+		label: 'Inline Root over the <figcaption>',
 		source: '<figure><img src="https://ckeditor.com/docs/assets/img/ckeditor-5.svg" width="100" height="100"><figcaption id="editor">' +
-			'CKE5 Logo</figcaption></figure>'
+			'This is the editor created over the figcaption element for CKE5 Logo</figcaption></figure>'
 	},
 	{
-		label: 'Inline Root in <span>',
-		source: '<p><span id="editor">This is <strong>the <a href="https://ckeditor.com">editor</a> in t<em>he inline</em></strong>' +
-			'<em> span</em>.</span></p>'
+		label: 'Inline Root over the <span>',
+		source: '<p>This is some text in paragraph before span with editor. <span id="editor">This is the editor created inside the span' +
+			'element, which contains <a href="https://cksource.com">the link</a> and some styled content with ' +
+			'<span style="background-color:black;color:lightgrey;">some background and some colored text</span>. There are also ' +
+			'<strong>strong</strong>, <u>underline</u> and <code>code</code> fragments.</span> Here is some text in paragraph ' +
+			'after the span.</p>'
 	},
 	{
-		label: 'Inline Root in <dd>',
-		source: '<dl><dt>title</dt><dd id="editor">This is the editor in the dd inline element.</dd></dl>'
+		label: 'Inline Root over the <dd>',
+		source: '<dl><dt>descriptive term</dt><dd id="editor">This is the editor created over the dd element.</dd></dl>'
 	},
 	{
-		label: 'Inline Root in <td>',
+		label: 'Inline Root over the <td>',
 		source: '<table class="my-table"><thead><tr><th colspan="2">The table header</th></tr></thead><tbody><tr>' +
-			'<td id="editor">The table body</td><td>with two columns</td></tr></tbody></table>'
+			'<td id="editor">Table cell where is initialized the editor instance.</td><td>Second cell which is not editable.</td></tr>' +
+			'</tbody></table>'
 	},
 	{
-		label: 'Inline Root in <label>',
-		source: '<label id="editor" for="checkbox">Checkbox label</label><input type="checkbox" id="checkbox">'
+		label: 'Inline Root over the <label>',
+		source: '<label id="editor" for="checkbox">The editor created over the checkbox label.</label><input type="checkbox" id="checkbox">'
 	},
 	{
-		label: 'Inline Root in <ol>',
-		source: '<ol id="editor"><li>Item 1</li><li>Item 2</li><li>Item 3</li></ol>'
+		label: 'Inline Root over the <ol>',
+		source: '<ol id="editor"><li>The editor should be intialized over the ol element.</li><li>Item 2</li><li>Item 3</li></ol>'
 	}
 ];
 
 function initEditor( config ) {
-	if ( window.editor && window.editor.state !== 'destroyed' ) {
-		window.editor.destroy();
-	}
+	destroyEditor();
 
 	wrapper.innerHTML = config.source;
 
@@ -117,26 +126,29 @@ function initEditor( config ) {
 		} );
 }
 
-const form = document.getElementById( 'select-editor' );
+function destroyEditor() {
+	if ( window.editor && window.editor.state !== 'destroyed' ) {
+		window.editor.destroy();
+	}
+}
+
+const select = document.getElementById( 'editor-select' );
 
 options.forEach( ( config, index ) => {
-	const label = document.createElement( 'label' );
-	const input = document.createElement( 'input' );
+	const option = document.createElement( 'option' );
 
-	input.name = 'editor';
-	input.type = 'radio';
-	input.value = index;
+	option.value = index;
+	option.text = config.label;
 
-	label.appendChild( input );
-	label.appendChild( document.createTextNode( config.label ) );
-
-	form.appendChild( label );
+	select.appendChild( option );
 } );
 
-form.addEventListener( 'change', evt => {
+select.addEventListener( 'change', evt => {
 	const index = evt.target && parseInt( evt.target.value, 10 );
 
-	if ( typeof index == 'number' ) {
+	if ( typeof index == 'number' && options[ index ].source ) {
 		initEditor( options[ index ] );
+	} else {
+		destroyEditor();
 	}
 } );
