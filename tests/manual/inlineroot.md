@@ -1,16 +1,24 @@
-1. Click "Init editors".
+1. Select editor type
 2. Expected:
-  * Two inline editor should be created.
-  * Elements used as editables should remain visible.
-    * They should preserve `.custom-class`.
-  * There should be floating toolbars with "Bold", "Italic", "Undo", "Redo", "Link", "Unlink",
-  "Font size", "Font Family", "Font Color" and "Font Backround Color" buttons.
-3. Left editor is created over a `<p>` element with `$inlineRoot`. It allows only on creating inline content.
-4. Right editor is classic inline editor created over a `<div>` with all regular features.
-
-## Notes:
-
-* You can play with:
-  * `window.editables[ N ].isReadOnly`,
-* Changes to `window.editors[ name ].focusTracker.isFocused` should be logged to the console.
-* Features should work.
+  * The regular or the inline editor will be created according to the selected option.
+  * The editor is created with the light green border
+  * There should be floating toolbars with:
+    * "Heading",
+    * "Font Family",
+    * "Font Size",
+    * "Font Color",
+    * "Font Background Color",
+    * "Bold",
+    * "Italic",
+    * "Underline",
+    * "Code",
+    * "Link",
+    * "Highlight",
+    * "Bulleted List",
+    * "Numbered List",
+    * "Block Quote",
+    * "Insert Table",
+    * "Undo",
+    * "Redo"
+  * Selecting first option should destroy current editor instance remaining edited content.
+  * Selectig new editor should destroy current instance and create new one with new content.

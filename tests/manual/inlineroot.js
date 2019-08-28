@@ -39,7 +39,7 @@ const options = [
 	{
 		label: 'Regular Root over the <a> with the block elements',
 		isBlock: true,
-		source: '<a id="editor" href="http://ckeditor.com"><section><h2>Wrapped section with link - header</h2><p>The entire section ' +
+		source: '<a id="editor" href="http://ckeditor.com"><section><h2>Wrapped section with link</h2><p>The entire section ' +
 			'is wrapped with the anchor which has initialized editor and contains other allowed block elements</p><table><tr><td>1.1</td>' +
 			'<td>1.2</td></tr><tr><td>2.1</td><td>2.2 with list:<ul><li>Item 1</li><li>Item 2</li></ul></td></tr></table></section>'
 	},
