@@ -13,6 +13,7 @@ import Code from '@ckeditor/ckeditor5-basic-styles/src/code';
 import Font from '@ckeditor/ckeditor5-font/src/font';
 import Highlight from '@ckeditor/ckeditor5-highlight/src/highlight';
 
+let currentIndex;
 const wrapper = document.getElementById( 'wrapper' );
 const options = [
 	{
@@ -129,6 +130,10 @@ function initEditor( config ) {
 function destroyEditor() {
 	if ( window.editor && window.editor.state !== 'destroyed' ) {
 		window.editor.destroy();
+
+		if ( currentIndex > 0 ) {
+			options[ currentIndex ].source = wrapper.innerHTML;
+		}
 	}
 }
 
@@ -148,6 +153,7 @@ select.addEventListener( 'change', evt => {
 
 	if ( typeof index == 'number' && options[ index ].source ) {
 		initEditor( options[ index ] );
+		currentIndex = index;
 	} else {
 		destroyEditor();
 	}
